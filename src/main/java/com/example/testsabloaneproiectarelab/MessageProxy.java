@@ -1,22 +1,27 @@
 package com.example.testsabloaneproiectarelab;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
+import java.util.ArrayList;
 import java.util.Date;
 
-public class Message implements Element{
-    @JsonProperty("date")
+public class MessageProxy implements Element{
     private Date date;
-    @JsonProperty("message")
     private String message;
-    @JsonProperty("house")
     private String house;
+    private Message realMessage;
 
-    public Message(Date date, String message, String house){
+    public MessageProxy(Date date, String message, String house){
         this.date = date;
         this.message = message;
         this.house = house;
+        this.realMessage = null;
     }
+    public Message loadMessage(){
+        if(realMessage == null){
+            realMessage = new Message(date, message, house);
+        }
+        return realMessage;
+    }
+
     public void print(){
         MessageDate d = new MessageDate(date);
         MessageHouse h = new MessageHouse(house);
